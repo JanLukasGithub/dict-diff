@@ -1,5 +1,5 @@
 from dict_diff import *
-from test_dict_diff import test_cases
+from tests.test_dict_diff import test_cases
 import cProfile
 
 def run_n_times(n=100):

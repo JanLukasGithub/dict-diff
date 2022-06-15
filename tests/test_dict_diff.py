@@ -1,4 +1,4 @@
-from dict_diff import dict_diff, equivalent, apply_diff
+from dict_diff import *
 
 test_cases = [{
     "orig": {
@@ -107,16 +107,16 @@ def test_equivalent():
     assert equivalent(1, 1)
     assert equivalent("", "")
     assert equivalent(True, True)
-    
-    assert equivalent(["value1", "value2", "value3"],\
+
+    assert equivalent(["value1", "value2", "value3"],
         ["value2", "value3", "value1"])
-    assert equivalent([{"key2.1": "value2.1"}, {"key2.2": "value2.2"}, {"key2.3": ["value2.4", "value2.3"]}],\
+    assert equivalent([{"key2.1": "value2.1"}, {"key2.2": "value2.2"}, {"key2.3": ["value2.4", "value2.3"]}],
         [{"key2.3": ["value2.3", "value2.4"]}, {"key2.1": "value2.1"}, {"key2.2": "value2.2"}])
 
     assert equivalent({}, {})
-    assert equivalent({"foo": "valuefoo", "bar": "valuebar"},\
+    assert equivalent({"foo": "valuefoo", "bar": "valuebar"},
         {"bar": "valuebar", "foo": "valuefoo"})
-    assert not equivalent({"nested": {"key2": "value2"}, "key1": "value1"},\
+    assert not equivalent({"nested": {"key2": "value2"}, "key1": "value1"},
         {"nested": {"key3": "value3"}, "key1": "value1"})
-    assert equivalent({"list1": ["value1", "value2", "value3"], "list2": [{"key2.1": "value2.1"}, {"key2.2": "value2.2"}, {"key2.3": ["value2.4", "value2.3"]}]},\
+    assert equivalent({"list1": ["value1", "value2", "value3"], "list2": [{"key2.1": "value2.1"}, {"key2.2": "value2.2"}, {"key2.3": ["value2.4", "value2.3"]}]},
         {"list1": ["value2", "value3", "value1"], "list2": [{"key2.3": ["value2.3", "value2.4"]}, {"key2.1": "value2.1"}, {"key2.2": "value2.2"}]})
