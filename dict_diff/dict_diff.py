@@ -161,6 +161,12 @@ def find_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
 
     return found_keys
 
+def find_added(orig: dict, other: dict):
+    """
+    :return: a list of keys k that are in other but not orig, such that k is a subset of other's keys
+    """
+    return find_removed(other, orig)
+
 def find_removed(orig: dict, other: dict):
     """
     :return: a list of keys k that are in orig but not other, such that k is a subset of orig's keys
