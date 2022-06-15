@@ -1,4 +1,5 @@
 from dict_diff import *
+from dict_diff.dict_diff import _Remove
 
 test_cases = [{
     "orig": {
@@ -87,6 +88,27 @@ test_cases = [{
     },
     "diff": {
         "key2": "value2"
+    }
+}, {
+    "orig": {
+        "key1": "value1",
+        "key2": "value2",
+        "key3": {
+            "key4": "value4",
+            "key5": "value5"
+        }
+    },
+    "new": {
+        "key2": "value2",
+        "key3": {
+            "key5": "value5"
+        }
+    },
+    "diff": {
+        "key1": _Remove("value1"),
+        "key3": {
+            "key4": _Remove("value4")
+        }
     }
 }]
 
