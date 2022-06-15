@@ -1,5 +1,5 @@
 from dict_diff import *
-from dict_diff.dict_diff import contains_none
+from dict_diff.dict_diff import _Remove
 
 test_cases = [{
     "orig": {
@@ -98,7 +98,7 @@ test_cases = [{
         "key2": "value2"
     },
     "diff": {
-        "key1": None
+        "key1": _Remove()
     }
 }]
 
@@ -132,15 +132,3 @@ def test_equivalent():
         {"nested": {"key3": "value3"}, "key1": "value1"})
     assert equivalent({"list1": ["value1", "value2", "value3"], "list2": [{"key2.1": "value2.1"}, {"key2.2": "value2.2"}, {"key2.3": ["value2.4", "value2.3"]}]},
         {"list1": ["value2", "value3", "value1"], "list2": [{"key2.3": ["value2.3", "value2.4"]}, {"key2.1": "value2.1"}, {"key2.2": "value2.2"}]})
-
-def test_contains_none():
-    local_test_cases = [{
-        "dict": {},
-        "expected": False
-    }, {
-        "dict": {"key": None},
-        "expected": True
-    }]
-
-    for test in local_test_cases:
-        assert test["expected"] == contains_none(test["dict"])

@@ -6,6 +6,9 @@
 
 """
 
+from dataclasses import dataclass
+
+
 def equivalent(element1, element2):
     """
     :return: True if and only if:
@@ -62,22 +65,15 @@ def list_unordered_equal(list1: list, list2: list):
 
     return not list2_copy
 
-def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalent,\
-    check_not_none=True):
+def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalent):
     """
     :param orig: The original dict
-    :param other: The dict the diff is taken of. :exc:`ValueError`
-         raised when one of the values is None
+    :param other: The dict the diff is taken of
     :param removing: If this method uses :func:`~dict_diff.dict_diff.remove_equivalent` or
          :func:`~dict_diff.dict_diff.add_different`, defaults to False
     :param equivalent_func: This method is used for determining if two elements
          (of any types) are equivalent,
          defaults to :func:`~dict_diff.dict_diff.equivalent`
-    :param check_not_none: If the function should check for None values in other,
-         and if found raise a :exc:`ValueError`. When this is False, the None values will be treated
-         as if the respective key was removed. Defaults to True
-
-    :raises ValueError: if other contains a None value
 
     :return: The diff, so that :func:`apply_diff(orig, diff) <dict_diff.dict_diff.apply_diff>`
          returns something :func:`~dict_diff.dict_diff.equivalent` to other
@@ -86,10 +82,6 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalen
     You can directly use :func:`~dict_diff.dict_diff.add_different` or
          :func:`~dict_diff.dict_diff.remove_equivalent` to circumvent one if-statement
     """
-    if check_not_none:
-        if contains_none(other):
-            raise ValueError(other)
-
     if removing:
         return remove_equivalent(orig, other, equivalent_func)
 
@@ -113,7 +105,7 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent):
             new_dict[key] = other[key]
 
     for key in find_removed(orig, other):
-        new_dict[key] = None
+        new_dict[key] = _Remove()
 
     return new_dict
 
@@ -139,7 +131,7 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
                 removed_from[key] = remove_equivalent(orig[key], other[key], equivalent_func)
 
     for key in find_removed(orig, other):
-        removed_from[key] = None
+        removed_from[key] = _Remove()
 
     return removed_from
 
@@ -181,21 +173,6 @@ def find_removed(orig: dict, other: dict):
 
     return found
 
-def contains_none(dictionary: dict):
-    """
-    :return: False if and only if none of the values of dictionary or any sub-dicts of
-         dictionary is None
-    """
-    for key in dictionary:
-        if dictionary[key] is None:
-            return True
-
-        if isinstance(dictionary[key], dict):
-            if contains_none(dictionary[key]):
-                return True
-
-    return False
-
 def apply_diff(orig: dict, diff: dict):
     """
     Applies the diff to orig
@@ -205,18 +182,29 @@ def apply_diff(orig: dict, diff: dict):
 
     :return: a dict, so that
          :func:`apply_diff(something, dict_diff(something, other)) <dict_diff.dict_diff.apply_diff>`
-         is :func:`~dict_diff.dict_diff.equivalent` to other.
-         :func:`contains_none(apply_diff(...)) <dict_diff.dict_diff.contains_none>` will always
-         return False
+         is :func:`~dict_diff.dict_diff.equivalent` to other
     """
     applied = orig.copy()
 
     for key in diff:
         if key in orig and isinstance(orig[key], dict) and isinstance(diff[key], dict):
             applied[key] = apply_diff(orig[key], diff[key])
-        elif diff[key] is None:
+        elif isinstance(diff[key], _Remove):
             applied.pop(key)
         else:
             applied[key] = diff[key]
 
     return applied
+
+@dataclass
+class _Remove:
+    value: str
+
+    def __init__(self, value=""):
+        self.value = value
+
+    def __eq__(self, __o: object) -> bool:
+        if not isinstance(__o, self.__class__):
+            return False
+
+        return self.value == __o.value
