@@ -163,9 +163,10 @@ def find_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
 
 def find_added(orig: dict, other: dict):
     """
-    :return: a list of keys k that are in other but not orig, such that k is a subset of other's keys
+    :return: a list of keys k that are in other but not orig,
+         such that k is a subset of other's keys
     """
-    return find_removed(other, orig)
+    return find_removed(orig=other, other=orig)
 
 def find_removed(orig: dict, other: dict):
     """
@@ -204,9 +205,9 @@ def apply_diff(orig: dict, diff: dict):
 
 @dataclass
 class _Remove:
-    value: str
+    value: object
 
-    def __init__(self, value=""):
+    def __init__(self, value=None):
         self.value = value
 
     def __eq__(self, __o: object) -> bool:
