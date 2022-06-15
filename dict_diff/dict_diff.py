@@ -105,7 +105,7 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent):
             new_dict[key] = other[key]
 
     for key in find_removed(orig, other):
-        new_dict[key] = _Remove()
+        new_dict[key] = _Remove(orig[key])
 
     return new_dict
 
@@ -131,7 +131,7 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
                 removed_from[key] = remove_equivalent(orig[key], other[key], equivalent_func)
 
     for key in find_removed(orig, other):
-        removed_from[key] = _Remove()
+        removed_from[key] = _Remove(orig[key])
 
     return removed_from
 
