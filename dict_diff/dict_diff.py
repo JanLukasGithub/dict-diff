@@ -1,4 +1,8 @@
 """
+**This exports:**
+ * :func:`~dict_diff.dict_diff.apply_diff` Apply the diff to a dict
+ * :func:`~dict_diff.dict_diff.dict_diff` Get the diff between two dicts
+ * :func:`~dict_diff.dict_diff.equivalent` Checks if two items are equivalent
 
 """
 
@@ -26,7 +30,8 @@ def equivalent(element1, element2):
 
 def dict_equivalent(dict1: dict, dict2: dict):
     """
-    :return: True if and only if all members of the dicts are :func:`~dict_diff.equivalent`
+    :return: True if and only if all members of the dicts are
+         :func:`~dict_diff.dict_diff.equivalent`
     :rtype: bool
     """
     if not len(dict1) == len(dict2):
@@ -41,7 +46,7 @@ def dict_equivalent(dict1: dict, dict2: dict):
 def list_unordered_equal(list1: list, list2: list):
     """
     :return: True if and only if each value in list1 has exactly one
-         :func:`~dict_diff.equivalent` value in list2
+         :func:`~dict_diff.dict_diff.equivalent` value in list2
     :rtype: bool
     """
     if not len(list1) == len(list2):
@@ -61,18 +66,18 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalen
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of
-    :param removing: If this method uses :func:`~dict_diff.remove_equivalent` or
-         :func:`~dict_diff.add_different`, defaults to False
+    :param removing: If this method uses :func:`~dict_diff.dict_diff.remove_equivalent` or
+         :func:`~dict_diff.dict_diff.add_different`, defaults to False
     :param equivalent_func: This method is used for determining if two elements
          (of any types) are equivalent,
-        defaults to :func:`~dict_diff.equivalent`
+         defaults to :func:`~dict_diff.dict_diff.equivalent`
 
-    :return: The diff, so that :func:`apply_diff(orig, diff) <dict_diff.apply_diff>`
-         returns something :func:`~dict_diff.equivalent` to other
+    :return: The diff, so that :func:`apply_diff(orig, diff) <dict_diff.dict_diff.apply_diff>`
+         returns something :func:`~dict_diff.dict_diff.equivalent` to other
     :rtype: dict
 
-    You can directly use :func:`~dict_diff.add_different` or :func:`~dict_diff.remove_equivalent`
-         to circumvent one if-statement
+    You can directly use :func:`~dict_diff.dict_diff.add_different` or
+         :func:`~dict_diff.dict_diff.remove_equivalent` to circumvent one if-statement
     """
     if removing:
         return remove_equivalent(orig, other, equivalent_func)
@@ -81,11 +86,11 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalen
 
 def add_different(orig: dict, other: dict, equivalent_func=equivalent):
     """
-    :return: the dict, where all of other's keys values not :func:`~dict_diff.equivalent`
+    :return: the dict, where all of other's keys values not :func:`~dict_diff.dict_diff.equivalent`
          to ones in orig are present. If the value of a key is a dict, only non
-         :func:`~dict_diff.equivalent` parts of that dictionary are present
+         :func:`~dict_diff.dict_diff.equivalent` parts of that dictionary are present
 
-    This is faster than :func:`~dict_diff.remove_equivalent`,
+    This is faster than :func:`~dict_diff.dict_diff.remove_equivalent`,
          if the difference between the dicts is small
     """
     new_dict = {}
@@ -100,11 +105,11 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent):
 
 def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
     """
-    :return: the dict, where all of other's keys values :func:`~dict_diff.equivalent`
+    :return: the dict, where all of other's keys values :func:`~dict_diff.dict_diff.equivalent`
          to ones in orig have been removed. If the value of a key is a dict, all
-          :func:`~dict_diff.equivalent` parts of that dictionary are removed as well
+         :func:`~dict_diff.dict_diff.equivalent` parts of that dictionary are removed as well
 
-    This is faster than :func:`~dict_diff.add_different`,
+    This is faster than :func:`~dict_diff.dict_diff.add_different`,
          if the difference between the dicts is large
     """
     to_remove = find_equivalent(orig, other, equivalent_func)
@@ -123,8 +128,8 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
 
 def find_different(orig: dict, other: dict, equivalent_func=equivalent):
     """
-    :return: a list of keys k whose values are not :func:`~dict_diff.equivalent` in orig and other,
-         such that k is a subset of other's keys
+    :return: a list of keys k whose values are not :func:`~dict_diff.dict_diff.equivalent`
+         in orig and other, such that k is a subset of other's keys
     """
     found_keys = []
 
@@ -136,8 +141,8 @@ def find_different(orig: dict, other: dict, equivalent_func=equivalent):
 
 def find_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
     """
-    :return: a list of keys k whose values are :func:`~dict_diff.equivalent` in orig and other,
-         such that k is a subset of orig's and other's keys
+    :return: a list of keys k whose values are :func:`~dict_diff.dict_diff.equivalent`
+     in orig and other, such that k is a subset of orig's and other's keys
     """
     found_keys = []
 
@@ -155,8 +160,8 @@ def apply_diff(orig: dict, diff: dict):
     :param diff: The diff to apply
 
     :return: a dict, so that
-         :func:`apply_diff(something, dict_diff(something, other)) <dict_diff.apply_diff>`
-         is :func:`~dict_diff.equivalent` to other
+         :func:`apply_diff(something, dict_diff(something, other)) <dict_diff.dict_diff.apply_diff>`
+         is :func:`~dict_diff.dict_diff.equivalent` to other
     """
     applied = orig.copy()
 
