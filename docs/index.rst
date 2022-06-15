@@ -12,3 +12,6 @@ Documentation of dict_diff
 
 .. automodule:: dict_diff
    :members:
+
+.. automodule:: dict_diff.dict_diff
+   :members:
