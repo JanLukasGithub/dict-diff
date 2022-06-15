@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Documentation of dict_diff &#8212; Dictionary diff 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="documentation-of-dict-diff">
+<h1>Documentation of dict_diff<a class="headerlink" href="#documentation-of-dict-diff" title="Permalink to this heading">¶</a></h1>
+<div class="toctree-wrapper compound">
+</div>
+<span class="target" id="module-dict_diff"></span><dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.add_different">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">add_different</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equivalent_func=&lt;function</span> <span class="pre">equivalent&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.add_different" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the dict, where all of other’s keys values not <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> to ones in orig are present.
+If the value of a key is a dict, only non <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> parts of that dictionary are present</p>
+</dd>
+</dl>
+<p>This is faster than <a class="reference internal" href="#dict_diff.remove_equivalent" title="dict_diff.remove_equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">remove_equivalent()</span></code></a>, if the difference between the dicts is small</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.apply_diff">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">apply_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">diff</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.apply_diff" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies the diff to orig</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orig</strong> – The original dict</p></li>
+<li><p><strong>diff</strong> – The diff to apply</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dict, so that <a class="reference internal" href="#dict_diff.apply_diff" title="dict_diff.apply_diff"><code class="xref py py-func docutils literal notranslate"><span class="pre">apply_diff(something,</span> <span class="pre">dict_diff(something,</span> <span class="pre">other))</span></code></a>
+is <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> to other</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.dict_diff">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">dict_diff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removing=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equivalent_func=&lt;function</span> <span class="pre">equivalent&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.dict_diff" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>orig</strong> – The original dict</p></li>
+<li><p><strong>other</strong> – The dict the diff is taken of</p></li>
+<li><p><strong>removing</strong> – If this method uses <a class="reference internal" href="#dict_diff.remove_equivalent" title="dict_diff.remove_equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">remove_equivalent()</span></code></a> or <a class="reference internal" href="#dict_diff.add_different" title="dict_diff.add_different"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_different()</span></code></a>, defaults to False</p></li>
+<li><p><strong>equivalent_func</strong> – This method is used for determining if two elements (of any types) are equivalent,
+defaults to <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The diff, so that <a class="reference internal" href="#dict_diff.apply_diff" title="dict_diff.apply_diff"><code class="xref py py-func docutils literal notranslate"><span class="pre">apply_diff(orig,</span> <span class="pre">diff)</span></code></a> returns something <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> to other</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p>You can directly use <a class="reference internal" href="#dict_diff.add_different" title="dict_diff.add_different"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_different()</span></code></a> or <a class="reference internal" href="#dict_diff.remove_equivalent" title="dict_diff.remove_equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">remove_equivalent()</span></code></a> to circumvent one if-statement</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.dict_equivalent">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">dict_equivalent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dict1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dict2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.dict_equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if and only if all members of the dicts are <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a></p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.equivalent">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">equivalent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">element2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if and only if:</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>The types of element1 and element2 are the same</p></li>
+<li><ul>
+<li><p>For lists: if the lists are equal regardless of order</p></li>
+<li><p>For dicts: if all members are equivalent</p></li>
+<li><p>For everything else: if <cite>element1 == element2</cite></p></li>
+</ul>
+</li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.find_different">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">find_different</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equivalent_func=&lt;function</span> <span class="pre">equivalent&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.find_different" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a list of keys k whose values are not <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> in orig and other,
+such that k is a subset of other’s keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.find_equivalent">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">find_equivalent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equivalent_func=&lt;function</span> <span class="pre">equivalent&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.find_equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>a list of keys k whose values are <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> in orig and other,
+such that k is a subset of orig’s and other’s keys</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.list_unordered_equal">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">list_unordered_equal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list1</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list2</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.list_unordered_equal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if and only if each value in list1 has exactly one <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> value in list2</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="dict_diff.remove_equivalent">
+<span class="sig-prename descclassname"><span class="pre">dict_diff.</span></span><span class="sig-name descname"><span class="pre">remove_equivalent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">orig:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">other:</span> <span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">equivalent_func=&lt;function</span> <span class="pre">equivalent&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dict_diff.remove_equivalent" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the dict, where all of other’s keys values <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> to ones in orig have been removed.
+If the value of a key is a dict, all <a class="reference internal" href="#dict_diff.equivalent" title="dict_diff.equivalent"><code class="xref py py-func docutils literal notranslate"><span class="pre">equivalent()</span></code></a> parts of that dictionary are removed as well</p>
+</dd>
+</dl>
+<p>This is faster than <a class="reference internal" href="#dict_diff.add_different" title="dict_diff.add_different"><code class="xref py py-func docutils literal notranslate"><span class="pre">add_different()</span></code></a>, if the difference between the dicts is large</p>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">Dictionary diff</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Jan Lukas.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
