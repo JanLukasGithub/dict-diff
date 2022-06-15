@@ -205,7 +205,9 @@ def apply_diff(orig: dict, diff: dict):
 
     :return: a dict, so that
          :func:`apply_diff(something, dict_diff(something, other)) <dict_diff.dict_diff.apply_diff>`
-         is :func:`~dict_diff.dict_diff.equivalent` to other
+         is :func:`~dict_diff.dict_diff.equivalent` to other.
+         :func:`contains_none(apply_diff(...)) <dict_diff.dict_diff.contains_none>` will always
+         return False
     """
     applied = orig.copy()
 
