@@ -88,6 +88,17 @@ test_cases = [{
     "diff": {
         "key2": "value2"
     }
+}, {
+    "orig": {
+        "key1": "value1",
+        "key2": "value2"
+    },
+    "new": {
+        "key2": "value2"
+    },
+    "diff": {
+        "key1": None
+    }
 }]
 
 def test_dict_diff():
