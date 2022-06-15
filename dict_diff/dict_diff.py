@@ -74,7 +74,8 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalen
          (of any types) are equivalent,
          defaults to :func:`~dict_diff.dict_diff.equivalent`
     :param check_not_none: If the function should check for None values in other,
-         and if found raise a :exc:`ValueError`, defaults to True
+         and if found raise a :exc:`ValueError`. When this is False, the None values will be treated
+         as if the respective key was removed. Defaults to True
 
     :raises ValueError: if other contains a None value
 
