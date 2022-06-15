@@ -62,7 +62,8 @@ def list_unordered_equal(list1: list, list2: list):
 
     return not list2_copy
 
-def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalent, check_not_none=True):
+def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalent,\
+    check_not_none=True):
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of. :exc:`ValueError`
@@ -180,10 +181,15 @@ def find_removed(orig: dict, other: dict):
     return found
 
 def contains_none(dictionary: dict):
+    """
+    :return: False if and only if none of the values of dictionary or any sub-dicts of
+         dictionary is None
+    """
     for key in dictionary:
         if dictionary[key] is None:
             return True
-        elif isinstance(dictionary[key], dict):
+
+        if isinstance(dictionary[key], dict):
             if contains_none(dictionary[key]):
                 return True
 
