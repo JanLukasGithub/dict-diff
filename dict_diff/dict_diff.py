@@ -101,6 +101,9 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent):
         else:
             new_dict[key] = other[key]
 
+    for key in find_removed(orig, other):
+        new_dict[key] = None
+
     return new_dict
 
 def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
@@ -123,6 +126,9 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
         if key in orig:
             if isinstance(other[key], dict) and isinstance(orig[key], dict):
                 removed_from[key] = remove_equivalent(orig[key], other[key], equivalent_func)
+
+    for key in find_removed(orig, other):
+        removed_from[key] = None
 
     return removed_from
 
@@ -152,6 +158,18 @@ def find_equivalent(orig: dict, other: dict, equivalent_func=equivalent):
 
     return found_keys
 
+def find_removed(orig: dict, other: dict):
+    """
+    :return: a list of keys k that are in orig but not other, such that k is a subset of orig's keys
+    """
+    found = []
+
+    for key in orig:
+        if key not in other:
+            found.append(key)
+
+    return found
+
 def apply_diff(orig: dict, diff: dict):
     """
     Applies the diff to orig
@@ -168,8 +186,9 @@ def apply_diff(orig: dict, diff: dict):
     for key in diff:
         if key in orig and isinstance(orig[key], dict) and isinstance(diff[key], dict):
             applied[key] = apply_diff(orig[key], diff[key])
+        elif diff[key] is None:
+            applied.pop(key)
         else:
             applied[key] = diff[key]
-
 
     return applied
