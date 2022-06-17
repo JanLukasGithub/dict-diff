@@ -35,7 +35,7 @@ jobs:
     - name: Lint with pylint
       run: |
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        pylint dict_diff
+        pylint dictionary_diff
     - name: Test with pytest
       run: |
         pytest
