@@ -29,7 +29,7 @@ test_cases = [{
             "key2.2": "value2.2"
         },
         "key3": [
-            "value3.1", "value3.2", "value3.3"
+            "value3.1", "value3.2", "value3.3", "value3.4"
         ]
     },
     "new": {
@@ -39,7 +39,7 @@ test_cases = [{
             "key2.2": "value2.2"
         },
         "key3": [
-            "value3.1", "value3.2", "value3.3", "value3.4"
+            "value3.1", "value3.2", "value3.3", "value3.5"
         ]
     },
     "diff": {
@@ -48,7 +48,7 @@ test_cases = [{
             "key2.1": "newvalue2.1"
         },
         "key3": [
-            "value3.1", "value3.2", "value3.3", "value3.4"
+            "value3.5", _Remove("value3.4")
         ]
     }
 }, {
