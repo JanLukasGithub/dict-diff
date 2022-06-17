@@ -110,6 +110,22 @@ test_cases = [{
             "key4": _Remove("value4")
         }
     }
+}, {
+    "orig": {
+        "key1": [
+            {"key2": "value2"}, {"key3": "value3"}, {"key4": "value4"}, 1, 2
+        ]
+    },
+    "new": {
+        "key1": [
+            {"key2": "value20"}, {"key4": "value4"}, {"key3": "value3"}, 3, 2
+        ]
+    },
+    "diff": {
+        "key1": [
+            {"key2": "value20"}, _Remove(1), 3
+        ]
+    }
 }]
 
 def test_dict_diff():
