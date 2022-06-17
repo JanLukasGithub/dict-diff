@@ -6,30 +6,8 @@
 
 """
 
-from dataclasses import dataclass
-
-
-def equivalent(element1, element2) -> bool:
-    """
-    :return: True if and only if:
-
-    - The types of element1 and element2 are the same
-    - - For lists: if the lists are equal regardless of order
-      - For dicts: if all members are equivalent
-      - For everything else: if `element1 == element2`
-
-    :rtype: bool
-    """
-    if type(element1) is not type(element2):
-        return False
-
-    if isinstance(element1, list):
-        return list_unordered_equal(element1, element2)
-
-    if isinstance(element1, dict):
-        return dict_equivalent(element1, element2)
-
-    return element1 == element2
+import dictionary_diff.diff as diff
+from dictionary_diff.diff import _Remove
 
 def dict_equivalent(dict1: dict, dict2: dict) -> bool:
     """
@@ -41,31 +19,12 @@ def dict_equivalent(dict1: dict, dict2: dict) -> bool:
         return False
 
     for key in dict1:
-        if key not in dict2 or not equivalent(dict1[key], dict2[key]):
+        if key not in dict2 or not diff.equivalent(dict1[key], dict2[key]):
             return False
 
     return True
 
-def list_unordered_equal(list1: list, list2: list) -> bool:
-    """
-    :return: True if and only if each value in list1 has exactly one
-     :func:`~dict_diff.dict_diff.equivalent` value in list2
-    :rtype: bool
-    """
-    if not len(list1) == len(list2):
-        return False
-
-    list2_copy = list2.copy()
-
-    for element_list1 in list1:
-        for element_list2 in list2_copy:
-            if equivalent(element_list1, element_list2):
-                list2_copy.remove(element_list2)
-                break
-
-    return not list2_copy
-
-def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalent) -> dict:
+def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=diff.equivalent) -> dict:
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of
@@ -87,11 +46,11 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=equivalen
 
     return add_different(orig, other, equivalent_func)
 
-def add_different(orig: dict, other: dict, equivalent_func=equivalent) -> dict:
+def add_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
     """
     :return: the dict, where all of other's keys values not :func:`~dict_diff.dict_diff.equivalent`
-     to ones in orig are present. If the value of a key is a dict, only non
-     :func:`~dict_diff.dict_diff.equivalent` parts of that dictionary are present
+     to ones in orig are present. If the value of a key is a dict or list, only non
+     :func:`~dict_diff.dict_diff.equivalent` parts of that are present
     :rtype: dict
 
     This is faster than :func:`~dict_diff.dict_diff.remove_equivalent`,
@@ -109,8 +68,8 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent) -> dict:
         new_dict[key] = _Remove(orig[key])
 
     return new_dict
-
-def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent) -> dict:
+    
+def remove_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
     """
     :return: the dict, where all of other's keys values :func:`~dict_diff.dict_diff.equivalent`
      to ones in orig have been removed. If the value of a key is a dict, all
@@ -137,7 +96,7 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent) -> di
 
     return removed_from
 
-def find_different(orig: dict, other: dict, equivalent_func=equivalent) -> list:
+def find_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
     """
     :return: a list of keys k whose values are not :func:`~dict_diff.dict_diff.equivalent`
      in orig and other, such that k is a subset of other's keys
@@ -151,7 +110,7 @@ def find_different(orig: dict, other: dict, equivalent_func=equivalent) -> list:
 
     return found_keys
 
-def find_equivalent(orig: dict, other: dict, equivalent_func=equivalent) -> list:
+def find_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
     """
     :return: a list of keys k whose values are :func:`~dict_diff.dict_diff.equivalent`
      in orig and other, such that k is a subset of orig's and other's keys
@@ -209,16 +168,3 @@ def apply_diff(orig: dict, diff: dict) -> dict:
             applied[key] = diff[key]
 
     return applied
-
-@dataclass
-class _Remove:
-    value: object
-
-    def __init__(self, value=None) -> None:
-        self.value = value
-
-    def __eq__(self, __o: object) -> bool:
-        if not isinstance(__o, self.__class__):
-            return False
-
-        return self.value == __o.value
