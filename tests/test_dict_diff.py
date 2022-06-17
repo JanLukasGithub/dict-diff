@@ -1,4 +1,4 @@
-from dict_diff import *
+from dict_diff.dict_diff import *
 from dict_diff.dict_diff import _Remove
 
 test_cases = [{
