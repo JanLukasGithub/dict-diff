@@ -1,4 +1,4 @@
-from dict_diff.dict_diff import *
+from dictionary_diff.dict_diff import *
 from tests.test_dict_diff import test_cases
 import cProfile
 
