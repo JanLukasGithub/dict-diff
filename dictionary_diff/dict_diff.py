@@ -68,7 +68,7 @@ def add_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> d
         new_dict[key] = _Remove(orig[key])
 
     return new_dict
-    
+
 def remove_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
     """
     :return: the dict, where all of other's keys values :func:`~dict_diff.dict_diff.equivalent`
