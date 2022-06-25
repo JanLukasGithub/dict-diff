@@ -100,8 +100,11 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent) -> dict:
     new_dict = {}
 
     for difference in find_different(orig, other, equivalent_func):
-        if difference in orig and isinstance(orig[difference], dict) and isinstance(other[difference], dict):
-            new_dict[difference] = add_different(orig[difference], other[difference], equivalent_func)
+        if difference in orig and isinstance(orig[difference], dict)\
+            and isinstance(other[difference], dict):
+
+            new_dict[difference] = \
+                add_different(orig[difference], other[difference], equivalent_func)
         else:
             new_dict[difference] = other[difference]
 
@@ -128,7 +131,8 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent) -> di
     for remaining in removed_from:
         if remaining in orig:
             if isinstance(other[remaining], dict) and isinstance(orig[remaining], dict):
-                removed_from[remaining] = remove_equivalent(orig[remaining], other[remaining], equivalent_func)
+                removed_from[remaining] = \
+                    remove_equivalent(orig[remaining], other[remaining], equivalent_func)
 
     for mark_remove in find_removed(orig, other):
         removed_from[mark_remove] = _Remove(orig[mark_remove])
@@ -199,7 +203,9 @@ def apply_diff(orig: dict, diff: dict) -> dict:
     applied = orig.copy()
 
     for difference in diff:
-        if difference in orig and isinstance(orig[difference], dict) and isinstance(diff[difference], dict):
+        if difference in orig and isinstance(orig[difference], dict)\
+            and isinstance(diff[difference], dict):
+
             applied[difference] = apply_diff(orig[difference], diff[difference])
         elif isinstance(diff[difference], _Remove):
             applied.pop(difference)
