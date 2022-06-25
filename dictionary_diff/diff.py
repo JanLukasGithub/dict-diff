@@ -22,12 +22,12 @@ def equivalent(element1, element2) -> bool:
     """
     if type(element1) is not type(element2):
         return False
+    
+    if isinstance(element1, dict):
+        return dict_diff.equivalent(element1, element2, equivalent_func=equivalent)
 
     if isinstance(element1, list):
-        return list_diff.list_equivalent(element1, element2, equivalent_func=equivalent)
-
-    if isinstance(element1, dict):
-        return dict_diff.dict_equivalent(element1, element2, equivalent_func=equivalent)
+        return list_diff.equivalent(element1, element2, equivalent_func=equivalent)
 
     return element1 == element2
 
@@ -42,10 +42,10 @@ def diff(orig, other, equivalent_func=equivalent):
      returns something :func:`~dictionary_diff.diff.equivalent` to other
     """
     if isinstance(orig, dict) and isinstance(other, dict):
-        return dict_diff.dict_diff(orig, other, equivalent_func=equivalent_func, diff_func=diff)
+        return dict_diff.diff(orig, other, equivalent_func=equivalent_func, diff_func=diff)
 
     if isinstance(orig, list) and isinstance(other, list):
-        return list_diff.list_diff(orig, other, equivalent_func=equivalent_func)
+        return list_diff.diff(orig, other, equivalent_func=equivalent_func)
 
     return other
 
@@ -61,9 +61,9 @@ def apply_diff(orig, difference):
      is :func:`~dictionary_diff.diff.equivalent` to other
     """
     if isinstance(orig, dict) and isinstance(difference, dict):
-        return dict_diff.apply_dict_diff(orig, difference, apply_diff)
+        return dict_diff.apply_diff(orig, difference, apply_diff)
 
     if isinstance(orig, list) and isinstance(difference, list):
-        return list_diff.apply_list_diff(orig, difference)
+        return list_diff.apply_diff(orig, difference)
 
     return difference

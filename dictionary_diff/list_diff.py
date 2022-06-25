@@ -1,14 +1,14 @@
 """
 **list_diff module exports:**
- * :func:`~dictionary_diff.list_diff.list_equivalent` checks if two lists are equivalent
- * :func:`~dictionary_diff.list_diff.list_diff` returns the diff between two lists
- * :func:`~dictionary_diff.list_diff.apply_list_diff` applies the diff to a list
+ * :func:`~dictionary_diff.list_diff.equivalent` checks if two lists are equivalent
+ * :func:`~dictionary_diff.list_diff.diff` returns the diff between two lists
+ * :func:`~dictionary_diff.list_diff.apply_diff` applies the diff to a list
 
 """
 
 from dictionary_diff.change import _Remove
 
-def list_equivalent(list1: list, list2: list, equivalent_func) -> bool:
+def equivalent(list1: list, list2: list, equivalent_func) -> bool:
     """
     :return: True if and only if each value in list1 has exactly one
      :func:`~dictionary_diff.diff.equivalent` value in list2
@@ -27,7 +27,7 @@ def list_equivalent(list1: list, list2: list, equivalent_func) -> bool:
 
     return not list2_copy
 
-def list_diff(orig: list, other: list, equivalent_func) -> list:
+def diff(orig: list, other: list, equivalent_func) -> list:
     """
     :param orig: The original list
     :param other: The list the diff is taken of
@@ -93,7 +93,7 @@ def find_removed(orig: list, other: list, equivalent_func) -> list:
 
     return orig_copy
 
-def apply_list_diff(orig: list, difference: list) -> list:
+def apply_diff(orig: list, difference: list) -> list:
     """
     Applies the diff to orig
 

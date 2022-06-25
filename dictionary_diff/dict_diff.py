@@ -1,14 +1,14 @@
 """
 **dict_diff module exports:**
- * :func:`~dictionary_diff.dict_diff.apply_dict_diff` Apply the diff to a dict
- * :func:`~dictionary_diff.dict_diff.dict_diff` Get the diff between two dicts
- * :func:`~dictionary_diff.dict_diff.dict_equivalent` Checks if two items are equivalent
+ * :func:`~dictionary_diff.dict_diff.equivalent` Checks if two items are equivalent
+ * :func:`~dictionary_diff.dict_diff.diff` Get the diff between two dicts
+ * :func:`~dictionary_diff.dict_diff.apply_diff` Apply the diff to a dict
 
 """
 
 from dictionary_diff.change import _Remove
 
-def dict_equivalent(dict1: dict, dict2: dict, equivalent_func) -> bool:
+def equivalent(dict1: dict, dict2: dict, equivalent_func) -> bool:
     """
     :return: True if and only if all members of the dicts are
      :func:`~dictionary_diff.diff.equivalent`
@@ -23,7 +23,7 @@ def dict_equivalent(dict1: dict, dict2: dict, equivalent_func) -> bool:
 
     return True
 
-def dict_diff(orig: dict, other: dict, equivalent_func, diff_func) -> dict:
+def diff(orig: dict, other: dict, equivalent_func, diff_func) -> dict:
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of
@@ -95,7 +95,7 @@ def find_removed(orig: dict, other: dict) -> list:
 
     return found
 
-def apply_dict_diff(orig: dict, difference: dict, apply_diff_func) -> dict:
+def apply_diff(orig: dict, difference: dict, apply_diff_func) -> dict:
     """
     Applies the diff to orig
 
