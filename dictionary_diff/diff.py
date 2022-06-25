@@ -41,13 +41,13 @@ def equivalent(element1, element2) -> bool:
 
     return element1 == element2
 
-def diff(orig, other):
+def diff(orig, other, equivalent_func=equivalent):
     if isinstance(orig, dict) and isinstance(other, dict):
         from dictionary_diff.dict_diff import dict_diff
-        return dict_diff(orig, other)
+        return dict_diff(orig, other, equivalent_func=equivalent_func)
 
     if isinstance(orig, list) and isinstance(other, list):
         from dictionary_diff.list_diff import list_diff
-        return list_diff(orig, other)
+        return list_diff(orig, other, equivalent_func=equivalent_func)
     
     return other
