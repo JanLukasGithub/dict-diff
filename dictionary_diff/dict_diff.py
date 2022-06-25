@@ -28,8 +28,6 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=diff.equi
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of
-    :param removing: If this method uses :func:`~dict_diff.dict_diff.remove_equivalent` or
-     :func:`~dict_diff.dict_diff.add_different`, defaults to False
     :param equivalent_func: This method is used for determining if two elements
      (of any types) are equivalent,
      defaults to :func:`~dict_diff.dict_diff.equivalent`
@@ -37,63 +35,16 @@ def dict_diff(orig: dict, other: dict, removing=False, equivalent_func=diff.equi
     :return: The diff, so that :func:`apply_diff(orig, diff) <dict_diff.dict_diff.apply_diff>`
      returns something :func:`~dict_diff.dict_diff.equivalent` to other
     :rtype: dict
-
-    You can directly use :func:`~dict_diff.dict_diff.add_different` or
-     :func:`~dict_diff.dict_diff.remove_equivalent` to circumvent one if-statement
-    """
-    if removing:
-        return remove_equivalent(orig, other, equivalent_func)
-
-    return add_different(orig, other, equivalent_func)
-
-def add_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
-    """
-    :return: the dict, where all of other's keys values not :func:`~dict_diff.dict_diff.equivalent`
-     to ones in orig are present. If the value of a key is a dict or list, only non
-     :func:`~dict_diff.dict_diff.equivalent` parts of that are present
-    :rtype: dict
-
-    This is faster than :func:`~dict_diff.dict_diff.remove_equivalent`,
-     if the difference between the dicts is small
     """
     new_dict = {}
 
-    for key in find_different(orig, other, equivalent_func):
-        new_dict[key] = diff.diff(orig.get(key, None), other[key], equivalent_func)
+    for difference in find_different(orig, other, equivalent_func):
+        new_dict[difference] = diff.diff(orig.get(difference, None), other[difference], equivalent_func)
 
-    for key in find_removed(orig, other):
-        new_dict[key] = _Remove(orig[key])
+    for removed in find_removed(orig, other):
+        new_dict[removed] = _Remove(orig[removed])
 
     return new_dict
-
-def remove_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
-    """
-    :return: the dict, where all of other's keys values :func:`~dict_diff.dict_diff.equivalent`
-     to ones in orig have been removed. If the value of a key is a dict, all
-     :func:`~dict_diff.dict_diff.equivalent` parts of that dictionary are removed as well
-    :rtype: dict
-
-    This is faster than :func:`~dict_diff.dict_diff.add_different`,
-     if the difference between the dicts is large
-    """
-    to_remove = find_equivalent(orig, other, equivalent_func)
-
-    removed_from = other.copy()
-
-    for key in to_remove:
-        removed_from.pop(key)
-
-    for key in removed_from:
-        if key in orig:
-            if isinstance(other[key], dict) and isinstance(orig[key], dict):
-                removed_from[key] = remove_equivalent(orig[key], other[key], equivalent_func)
-            elif isinstance(other[key], list) and isinstance(orig[key], list):
-                removed_from[key] = diff.diff(orig[key], other[key], equivalent_func)
-
-    for key in find_removed(orig, other):
-        removed_from[key] = _Remove(orig[key])
-
-    return removed_from
 
 def find_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
     """
@@ -158,12 +109,14 @@ def apply_diff(orig: dict, diff: dict) -> dict:
     """
     applied = orig.copy()
 
-    for key in diff:
-        if key in orig and isinstance(orig[key], dict) and isinstance(diff[key], dict):
-            applied[key] = apply_diff(orig[key], diff[key])
-        elif isinstance(diff[key], _Remove):
-            applied.pop(key)
+    for difference in diff:
+        if difference in orig and isinstance(orig[difference], dict)\
+            and isinstance(diff[difference], dict):
+
+            applied[difference] = apply_diff(orig[difference], diff[difference])
+        elif isinstance(diff[difference], _Remove):
+            applied.pop(difference)
         else:
-            applied[key] = diff[key]
+            applied[difference] = diff[difference]
 
     return applied
