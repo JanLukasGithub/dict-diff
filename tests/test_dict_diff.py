@@ -1,5 +1,5 @@
-from dictionary_diff.dict_diff import *
-from dictionary_diff.dict_diff import _Remove
+from dictionary_diff.diff import *
+from dictionary_diff.change import _Remove
 
 test_cases = [{
     "orig": {
@@ -29,7 +29,7 @@ test_cases = [{
             "key2.2": "value2.2"
         },
         "key3": [
-            "value3.1", "value3.2", "value3.3"
+            "value3.1", "value3.2", "value3.3", "value3.4"
         ]
     },
     "new": {
@@ -39,7 +39,7 @@ test_cases = [{
             "key2.2": "value2.2"
         },
         "key3": [
-            "value3.1", "value3.2", "value3.3", "value3.4"
+            "value3.1", "value3.2", "value3.3", "value3.5"
         ]
     },
     "diff": {
@@ -48,7 +48,7 @@ test_cases = [{
             "key2.1": "newvalue2.1"
         },
         "key3": [
-            "value3.1", "value3.2", "value3.3", "value3.4"
+            "value3.5", _Remove("value3.4")
         ]
     }
 }, {
@@ -110,11 +110,27 @@ test_cases = [{
             "key4": _Remove("value4")
         }
     }
+}, {
+    "orig": {
+        "key1": [
+            {"key2": "value2"}, {"key3": "value3"}, {"key4": "value4"}, 1, 2
+        ]
+    },
+    "new": {
+        "key1": [
+            {"key2": "value20"}, {"key4": "value4"}, {"key3": "value3"}, 3, 2
+        ]
+    },
+    "diff": {
+        "key1": [
+            {"key2": "value20"}, _Remove({"key2": "value2"}), _Remove(1), 3
+        ]
+    }
 }]
 
-def test_dict_diff():
+def test_diff():
     for test in test_cases:
-        assert equivalent(test["diff"], dict_diff(test["orig"], test["new"]))
+        assert equivalent(test["diff"], diff(test["orig"], test["new"]))
 
 def test_apply_diff():
     for test in test_cases:
