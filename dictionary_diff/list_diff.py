@@ -43,19 +43,6 @@ def list_diff(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
     added = find_added(orig, other, equivalent_func)
     removed = find_removed(orig, other, equivalent_func)
 
-    for item_added in added.copy():
-        for item_removed in removed:
-            if isinstance(item_added, dict) and isinstance(item_removed, dict):
-                difference.append(dict_diff.dict_diff(item_removed, item_added))
-                removed.remove(item_removed)
-                added.remove(item_added)
-                break
-            elif isinstance(item_added, list) and isinstance(item_removed, list):
-                difference.append(list_diff(item_removed, item_added))
-                removed.remove(item_removed)
-                added.remove(item_added)
-                break
-
     for item in added:
         difference.append(item)
 
@@ -105,7 +92,7 @@ def find_removed(orig: list, other: list, equivalent_func=diff.equivalent) -> li
 
     return orig_copy
 
-def apply_list_diff(orig: list, other: list) -> list:
+def apply_list_diff(orig: list, diff: list) -> list:
     """
     Applies the diff to orig
 
@@ -117,4 +104,12 @@ def apply_list_diff(orig: list, other: list) -> list:
      is :func:`~dict_diff.dict_diff.equivalent` to other
     :rtype: list
     """
-    pass
+    applied = orig.copy()
+
+    for difference in diff:
+        if isinstance(difference, _Remove):
+            applied.remove(difference.value)
+        else:
+            applied.append(difference)
+
+    return applied
