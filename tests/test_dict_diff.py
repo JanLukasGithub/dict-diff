@@ -114,8 +114,7 @@ test_cases = [{
 
 def test_dict_diff():
     for test in test_cases:
-        assert equivalent(test["diff"], dict_diff(test["orig"], test["new"], removing=False))
-        assert equivalent(test["diff"], dict_diff(test["orig"], test["new"], removing=True))
+        assert equivalent(test["diff"], dict_diff(test["orig"], test["new"]))
 
 def test_apply_diff():
     for test in test_cases:
