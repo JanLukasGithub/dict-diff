@@ -1,6 +1,5 @@
 from dictionary_diff.diff import *
 from dictionary_diff.diff import _Remove
-import dictionary_diff.dict_diff as dict_diff
 
 test_cases = [{
     "orig": {
