@@ -9,7 +9,7 @@
 from dictionary_diff import diff
 from dictionary_diff.diff import _Remove
 
-def dict_equivalent(dict1: dict, dict2: dict) -> bool:
+def dict_equivalent(dict1: dict, dict2: dict, equivalent_func) -> bool:
     """
     :return: True if and only if all members of the dicts are
      :func:`~dictionary_diff.diff.equivalent`
@@ -19,12 +19,12 @@ def dict_equivalent(dict1: dict, dict2: dict) -> bool:
         return False
 
     for key in dict1:
-        if key not in dict2 or not diff.equivalent(dict1[key], dict2[key]):
+        if key not in dict2 or not equivalent_func(dict1[key], dict2[key]):
             return False
 
     return True
 
-def dict_diff(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
+def dict_diff(orig: dict, other: dict, equivalent_func) -> dict:
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of
@@ -47,7 +47,7 @@ def dict_diff(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
 
     return new_dict
 
-def find_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
+def find_different(orig: dict, other: dict, equivalent_func) -> list:
     """
     :return: a list of keys k whose values are not :func:`~dictionary_diff.diff.equivalent`
      in orig and other, such that k is a subset of other's keys
@@ -61,7 +61,7 @@ def find_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> 
 
     return found_keys
 
-def find_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
+def find_equivalent(orig: dict, other: dict, equivalent_func) -> list:
     """
     :return: a list of keys k whose values are :func:`~dictionary_diff.diff.equivalent`
      in orig and other, such that k is a subset of orig's and other's keys
