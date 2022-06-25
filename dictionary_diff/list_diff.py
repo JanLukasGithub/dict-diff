@@ -6,10 +6,9 @@
 
 """
 
-from dictionary_diff import diff
 from dictionary_diff.diff import _Remove
 
-def list_equivalent(list1: list, list2: list) -> bool:
+def list_equivalent(list1: list, list2: list, equivalent_func) -> bool:
     """
     :return: True if and only if each value in list1 has exactly one
      :func:`~dictionary_diff.diff.equivalent` value in list2
@@ -22,13 +21,13 @@ def list_equivalent(list1: list, list2: list) -> bool:
 
     for element_list1 in list1:
         for element_list2 in list2_copy:
-            if diff.equivalent(element_list1, element_list2):
+            if equivalent_func(element_list1, element_list2):
                 list2_copy.remove(element_list2)
                 break
 
     return not list2_copy
 
-def list_diff(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
+def list_diff(orig: list, other: list, equivalent_func) -> list:
     """
     :param orig: The original list
     :param other: The list the diff is taken of
@@ -52,7 +51,7 @@ def list_diff(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
 
     return difference
 
-def find_equivalent(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
+def find_equivalent(orig: list, other: list, equivalent_func) -> list:
     """
     :return: a list of values v that are :func:`~dictionary_diff.diff.equivalent` in orig and other,
      such that v is a subset of orig and other
@@ -70,7 +69,7 @@ def find_equivalent(orig: list, other: list, equivalent_func=diff.equivalent) ->
 
     return found
 
-def find_added(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
+def find_added(orig: list, other: list, equivalent_func) -> list:
     """
     :return: a list of values v that are in other but not orig,
      such that v is a subset of other's values
@@ -78,7 +77,7 @@ def find_added(orig: list, other: list, equivalent_func=diff.equivalent) -> list
     """
     return find_removed(orig=other, other=orig, equivalent_func=equivalent_func)
 
-def find_removed(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
+def find_removed(orig: list, other: list, equivalent_func) -> list:
     """
     :return: a list of values v that are in orig but not other, such that v is a subset of orig's
      values
