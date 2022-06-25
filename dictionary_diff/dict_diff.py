@@ -7,7 +7,7 @@
 """
 
 import dictionary_diff.diff as diff
-from dictionary_diff.diff import _Remove
+from dictionary_diff.diff import _Remove, apply_diff
 
 def dict_equivalent(dict1: dict, dict2: dict) -> bool:
     """
@@ -95,7 +95,7 @@ def find_removed(orig: dict, other: dict) -> list:
 
     return found
 
-def apply_diff(orig: dict, diff: dict) -> dict:
+def apply_dict_diff(orig: dict, diff: dict) -> dict:
     """
     Applies the diff to orig
 
@@ -110,13 +110,9 @@ def apply_diff(orig: dict, diff: dict) -> dict:
     applied = orig.copy()
 
     for difference in diff:
-        if difference in orig and isinstance(orig[difference], dict)\
-            and isinstance(diff[difference], dict):
-
-            applied[difference] = apply_diff(orig[difference], diff[difference])
-        elif isinstance(diff[difference], _Remove):
-            applied.pop(difference)
+        if isinstance(diff[difference], _Remove):
+            applied.pop(difference, None)
         else:
-            applied[difference] = diff[difference]
+            applied[difference] = apply_diff(orig.get(difference, None), diff[difference])
 
     return applied
