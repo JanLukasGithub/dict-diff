@@ -1,8 +1,8 @@
 """
 **dict_diff module exports:**
- * :func:`~dict_diff.dict_diff.apply_diff` Apply the diff to a dict
- * :func:`~dict_diff.dict_diff.dict_diff` Get the diff between two dicts
- * :func:`~dict_diff.dict_diff.equivalent` Checks if two items are equivalent
+ * :func:`~dictionary_diff.dict_diff.apply_diff` Apply the diff to a dict
+ * :func:`~dictionary_diff.dict_diff.dict_diff` Get the diff between two dicts
+ * :func:`~dictionary_diff.dict_diff.equivalent` Checks if two items are equivalent
 
 """
 
@@ -12,7 +12,7 @@ from dictionary_diff.diff import _Remove, apply_diff
 def dict_equivalent(dict1: dict, dict2: dict) -> bool:
     """
     :return: True if and only if all members of the dicts are
-     :func:`~dict_diff.dict_diff.equivalent`
+     :func:`~dictionary_diff.diff.equivalent`
     :rtype: bool
     """
     if not len(dict1) == len(dict2):
@@ -30,10 +30,10 @@ def dict_diff(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
     :param other: The dict the diff is taken of
     :param equivalent_func: This method is used for determining if two elements
      (of any types) are equivalent,
-     defaults to :func:`~dict_diff.dict_diff.equivalent`
+     defaults to :func:`~dictionary_diff.diff.equivalent`
 
-    :return: The diff, so that :func:`apply_diff(orig, diff) <dict_diff.dict_diff.apply_diff>`
-     returns something :func:`~dict_diff.dict_diff.equivalent` to other
+    :return: The diff, so that :func:`apply_diff(orig, diff) <dictionary_diff.diff.apply_diff>`
+     returns something :func:`~dictionary_diff.diff.equivalent` to other
     :rtype: dict
     """
     new_dict = {}
@@ -49,7 +49,7 @@ def dict_diff(orig: dict, other: dict, equivalent_func=diff.equivalent) -> dict:
 
 def find_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
     """
-    :return: a list of keys k whose values are not :func:`~dict_diff.dict_diff.equivalent`
+    :return: a list of keys k whose values are not :func:`~dictionary_diff.diff.equivalent`
      in orig and other, such that k is a subset of other's keys
     :rtype: list
     """
@@ -63,7 +63,7 @@ def find_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> 
 
 def find_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) -> list:
     """
-    :return: a list of keys k whose values are :func:`~dict_diff.dict_diff.equivalent`
+    :return: a list of keys k whose values are :func:`~dictionary_diff.diff.equivalent`
      in orig and other, such that k is a subset of orig's and other's keys
     :rtype: list
     """
@@ -104,8 +104,8 @@ def apply_dict_diff(orig: dict, diff: dict) -> dict:
     :param diff: The diff to apply
 
     :return: a dict, so that
-     :func:`apply_diff(something, dict_diff(something, other)) <dict_diff.dict_diff.apply_diff>`
-     is :func:`~dict_diff.dict_diff.equivalent` to other
+     :func:`apply_diff(something, dict_diff(something, other)) <dictionary_diff.diff.apply_diff>`
+     is :func:`~dictionary_diff.diff.equivalent` to other
     :rtype: dict
     """
     applied = orig.copy()

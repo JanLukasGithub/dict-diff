@@ -1,4 +1,8 @@
 """
+**list_diff module exports:**
+ * :func:`~dictionary_diff.list_diff.equivalent` checks if two lists are equivalent
+ * :func:`~dictionary_diff.list_diff.diff` returns the diff between two lists
+ * :func:`~dictionary_diff.list_diff.apply_diff` applies the diff to a list
 
 """
 
@@ -9,7 +13,7 @@ from dictionary_diff.diff import _Remove
 def list_equivalent(list1: list, list2: list) -> bool:
     """
     :return: True if and only if each value in list1 has exactly one
-     :func:`~dict_diff.dict_diff.equivalent` value in list2
+     :func:`~dictionary_diff.diff.equivalent` value in list2
     :rtype: bool
     """
     if not len(list1) == len(list2):
@@ -29,12 +33,11 @@ def list_diff(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
     """
     :param orig: The original list
     :param other: The list the diff is taken of
-    :param equivalent_func: This method is used for determining if two elements
-     (of any types) are equivalent,
-     defaults to :func:`~dict_diff.dict_diff.equivalent`
+    :param equivalent_func: This method is used for determining if two elements are equivalent,
+     defaults to :func:`~dictionary_diff.diff.equivalent`
 
-    :return: The diff, so that :func:`apply_diff(orig, diff) <dict_diff.dict_diff.apply_diff>`
-     returns something :func:`~dict_diff.dict_diff.equivalent` to other
+    :return: The diff, so that :func:`apply_diff(orig, diff) <dictionary_diff.diff.apply_diff>`
+     returns something :func:`~dictionary_diff.diff.equivalent` to other
     :rtype: list
     """
     difference = []
@@ -79,7 +82,7 @@ def find_added(orig: list, other: list, equivalent_func=diff.equivalent) -> list
 def find_removed(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
     """
     :return: a list of values v that are in orig but not other, such that v is a subset of orig's
-    values
+     values
     :rtype: list
     """
     orig_copy = orig.copy()
@@ -100,8 +103,8 @@ def apply_list_diff(orig: list, diff: list) -> list:
     :param diff: The diff to apply
 
     :return: a list, so that
-     :func:`apply_diff(something, dict_diff(something, other)) <dict_diff.dict_diff.apply_diff>`
-     is :func:`~dict_diff.dict_diff.equivalent` to other
+     :func:`apply_diff(something, dict_diff(something, other)) <dictionary_diff.diff.apply_diff>`
+     is :func:`~dictionary_diff.diff.equivalent` to other
     :rtype: list
     """
     applied = orig.copy()

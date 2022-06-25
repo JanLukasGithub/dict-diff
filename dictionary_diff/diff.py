@@ -1,4 +1,8 @@
 """
+**diff module exports:**
+ * :func:`~dictionary_diff.diff.equivalent` checks if two values are equivalent
+ * :func:`~dictionary_diff.diff.diff` returns the diff between two values
+ * :func:`~dictionary_diff.diff.apply_diff` applies the diff to a value
 
 """
 
@@ -42,6 +46,15 @@ def equivalent(element1, element2) -> bool:
     return element1 == element2
 
 def diff(orig, other, equivalent_func=equivalent):
+    """
+    :param orig: The original value
+    :param other: The value the diff is taken of
+    :param equivalent_func: This method is used for determining if two values are equivalent,
+     defaults to :func:`~dictionary_diff.diff.equivalent`
+
+    :return: The diff, so that :func:`apply_diff(orig, diff) <dictionary_diff.diff.apply_diff>`
+     returns something :func:`~dictionary_diff.diff.equivalent` to other
+    """
     if isinstance(orig, dict) and isinstance(other, dict):
         from dictionary_diff import dict_diff
         return dict_diff.dict_diff(orig, other, equivalent_func=equivalent_func)
@@ -53,6 +66,16 @@ def diff(orig, other, equivalent_func=equivalent):
     return other
 
 def apply_diff(orig, diff):
+    """
+    Applies the diff to orig
+
+    :param orig: The original value
+    :param diff: The diff to apply
+
+    :return: a dict, so that
+     :func:`apply_diff(something, diff(something, other)) <dictionary_diff.diff.apply_diff>`
+     is :func:`~dictionary_diff.diff.equivalent` to other
+    """
     if isinstance(orig, dict) and isinstance(diff, dict):
         from dictionary_diff import dict_diff
         return dict_diff.apply_dict_diff(orig, diff)
