@@ -6,8 +6,7 @@
 
 """
 
-from dictionary_diff import diff
-from dictionary_diff.diff import _Remove
+from dictionary_diff.change import _Remove
 
 def dict_equivalent(dict1: dict, dict2: dict, equivalent_func) -> bool:
     """
@@ -24,7 +23,7 @@ def dict_equivalent(dict1: dict, dict2: dict, equivalent_func) -> bool:
 
     return True
 
-def dict_diff(orig: dict, other: dict, equivalent_func) -> dict:
+def dict_diff(orig: dict, other: dict, equivalent_func, diff_func) -> dict:
     """
     :param orig: The original dict
     :param other: The dict the diff is taken of
@@ -40,7 +39,7 @@ def dict_diff(orig: dict, other: dict, equivalent_func) -> dict:
 
     for difference in find_different(orig, other, equivalent_func):
         new_dict[difference] = \
-            diff.diff(orig.get(difference, None), other[difference], equivalent_func)
+            diff_func(orig.get(difference, None), other[difference], equivalent_func)
 
     for removed in find_removed(orig, other):
         new_dict[removed] = _Remove(orig[removed])
@@ -96,7 +95,7 @@ def find_removed(orig: dict, other: dict) -> list:
 
     return found
 
-def apply_dict_diff(orig: dict, difference: dict) -> dict:
+def apply_dict_diff(orig: dict, difference: dict, apply_diff_func) -> dict:
     """
     Applies the diff to orig
 
@@ -115,6 +114,6 @@ def apply_dict_diff(orig: dict, difference: dict) -> dict:
             applied.pop(difference_key, None)
         else:
             applied[difference_key] = \
-                diff.apply_diff(orig.get(difference_key, None), difference[difference_key])
+                apply_diff_func(orig.get(difference_key, None), difference[difference_key])
 
     return applied

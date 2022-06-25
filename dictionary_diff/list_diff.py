@@ -6,7 +6,7 @@
 
 """
 
-from dictionary_diff.diff import _Remove
+from dictionary_diff.change import _Remove
 
 def list_equivalent(list1: list, list2: list, equivalent_func) -> bool:
     """
