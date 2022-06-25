@@ -1,6 +1,6 @@
 """
 **change module exports:**
- * _Remove
+ * :class:`~dictionary_diff.change._Remove` used when values should be removed
 
 """
 
