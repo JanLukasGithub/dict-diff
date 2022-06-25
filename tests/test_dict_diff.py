@@ -124,7 +124,7 @@ test_cases = [{
     },
     "diff": {
         "key1": [
-            {"key2": "value20"}, _Remove(1), 3
+            {"key2": "value20"}, _Remove({"key2": "value2"}), _Remove(1), 3
         ]
     }
 }]
