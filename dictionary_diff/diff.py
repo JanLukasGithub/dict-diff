@@ -37,11 +37,11 @@ def equivalent(element1, element2) -> bool:
 
     if isinstance(element1, list):
         from dictionary_diff import list_diff
-        return list_diff.list_equivalent(element1, element2)
+        return list_diff.list_equivalent(element1, element2, equivalent_func=equivalent)
 
     if isinstance(element1, dict):
         from dictionary_diff import dict_diff
-        return dict_diff.dict_equivalent(element1, element2)
+        return dict_diff.dict_equivalent(element1, element2, equivalent_func=equivalent)
 
     return element1 == element2
 
