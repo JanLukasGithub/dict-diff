@@ -95,12 +95,12 @@ def find_removed(orig: list, other: list, equivalent_func=diff.equivalent) -> li
 
     return orig_copy
 
-def apply_list_diff(orig: list, diff: list) -> list:
+def apply_list_diff(orig: list, difference: list) -> list:
     """
     Applies the diff to orig
 
     :param orig: The original list
-    :param diff: The diff to apply
+    :param difference: The diff to apply
 
     :return: a list, so that
      :func:`apply_diff(something, dict_diff(something, other)) <dictionary_diff.diff.apply_diff>`
@@ -109,10 +109,10 @@ def apply_list_diff(orig: list, diff: list) -> list:
     """
     applied = orig.copy()
 
-    for difference in diff:
-        if isinstance(difference, _Remove):
-            applied.remove(difference.value)
+    for difference_key in difference:
+        if isinstance(difference_key, _Remove):
+            applied.remove(difference_key.value)
         else:
-            applied.append(difference)
+            applied.append(difference_key)
 
     return applied

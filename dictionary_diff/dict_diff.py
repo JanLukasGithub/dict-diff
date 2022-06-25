@@ -7,7 +7,7 @@
 """
 
 from dictionary_diff import diff
-from dictionary_diff.diff import _Remove, apply_diff
+from dictionary_diff.diff import _Remove
 
 def dict_equivalent(dict1: dict, dict2: dict) -> bool:
     """
@@ -96,12 +96,12 @@ def find_removed(orig: dict, other: dict) -> list:
 
     return found
 
-def apply_dict_diff(orig: dict, diff: dict) -> dict:
+def apply_dict_diff(orig: dict, difference: dict) -> dict:
     """
     Applies the diff to orig
 
     :param orig: The original dict
-    :param diff: The diff to apply
+    :param difference: The diff to apply
 
     :return: a dict, so that
      :func:`apply_diff(something, dict_diff(something, other)) <dictionary_diff.diff.apply_diff>`
@@ -110,10 +110,11 @@ def apply_dict_diff(orig: dict, diff: dict) -> dict:
     """
     applied = orig.copy()
 
-    for difference in diff:
-        if isinstance(diff[difference], _Remove):
-            applied.pop(difference, None)
+    for difference_key in difference:
+        if isinstance(difference[difference_key], _Remove):
+            applied.pop(difference_key, None)
         else:
-            applied[difference] = apply_diff(orig.get(difference, None), diff[difference])
+            applied[difference_key] = \
+                diff.apply_diff(orig.get(difference_key, None), difference[difference_key])
 
     return applied

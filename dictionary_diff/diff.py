@@ -65,23 +65,23 @@ def diff(orig, other, equivalent_func=equivalent):
 
     return other
 
-def apply_diff(orig, diff):
+def apply_diff(orig, difference):
     """
     Applies the diff to orig
 
     :param orig: The original value
-    :param diff: The diff to apply
+    :param difference: The diff to apply
 
     :return: a dict, so that
      :func:`apply_diff(something, diff(something, other)) <dictionary_diff.diff.apply_diff>`
      is :func:`~dictionary_diff.diff.equivalent` to other
     """
-    if isinstance(orig, dict) and isinstance(diff, dict):
+    if isinstance(orig, dict) and isinstance(difference, dict):
         from dictionary_diff import dict_diff
-        return dict_diff.apply_dict_diff(orig, diff)
+        return dict_diff.apply_dict_diff(orig, difference)
 
-    if isinstance(orig, list) and isinstance(diff, list):
+    if isinstance(orig, list) and isinstance(difference, list):
         from dictionary_diff import list_diff
-        return list_diff.apply_list_diff(orig, diff)
+        return list_diff.apply_list_diff(orig, difference)
 
-    return diff
+    return difference
