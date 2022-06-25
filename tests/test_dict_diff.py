@@ -1,7 +1,6 @@
 from dictionary_diff.diff import *
 from dictionary_diff.diff import _Remove
-from dictionary_diff.list_diff import *
-from dictionary_diff.dict_diff import *
+import dictionary_diff.dict_diff as dict_diff
 
 test_cases = [{
     "orig": {
@@ -132,11 +131,11 @@ test_cases = [{
 
 def test_dict_diff():
     for test in test_cases:
-        assert equivalent(test["diff"], dict_diff(test["orig"], test["new"]))
+        assert equivalent(test["diff"], diff(test["orig"], test["new"]))
 
 def test_apply_diff():
     for test in test_cases:
-        assert equivalent(test["new"], apply_diff(test["orig"], test["diff"]))
+        assert equivalent(test["new"], dict_diff.apply_diff(test["orig"], test["diff"]))
 
 def test_equivalent():
     assert not equivalent(1, "1")

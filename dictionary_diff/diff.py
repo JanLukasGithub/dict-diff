@@ -32,22 +32,22 @@ def equivalent(element1, element2) -> bool:
         return False
 
     if isinstance(element1, list):
-        from dictionary_diff.list_diff import list_equivalent
-        return list_equivalent(element1, element2)
+        import dictionary_diff.list_diff as list_diff
+        return list_diff.list_equivalent(element1, element2)
 
     if isinstance(element1, dict):
-        from dictionary_diff.dict_diff import dict_equivalent
-        return dict_equivalent(element1, element2)
+        import dictionary_diff.dict_diff as dict_diff
+        return dict_diff.dict_equivalent(element1, element2)
 
     return element1 == element2
 
 def diff(orig, other, equivalent_func=equivalent):
     if isinstance(orig, dict) and isinstance(other, dict):
-        from dictionary_diff.dict_diff import dict_diff
-        return dict_diff(orig, other, equivalent_func=equivalent_func)
+        import dictionary_diff.dict_diff as dict_diff
+        return dict_diff.dict_diff(orig, other, equivalent_func=equivalent_func)
 
     if isinstance(orig, list) and isinstance(other, list):
-        from dictionary_diff.list_diff import list_diff
-        return list_diff(orig, other, equivalent_func=equivalent_func)
+        import dictionary_diff.list_diff as list_diff
+        return list_diff.list_diff(orig, other, equivalent_func=equivalent_func)
     
     return other
