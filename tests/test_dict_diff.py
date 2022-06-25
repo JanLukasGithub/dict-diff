@@ -129,7 +129,7 @@ test_cases = [{
     }
 }]
 
-def test_dict_diff():
+def test_diff():
     for test in test_cases:
         assert equivalent(test["diff"], diff(test["orig"], test["new"]))
 
