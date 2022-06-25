@@ -135,7 +135,7 @@ def test_diff():
 
 def test_apply_diff():
     for test in test_cases:
-        assert equivalent(test["new"], dict_diff.apply_diff(test["orig"], test["diff"]))
+        assert equivalent(test["new"], apply_diff(test["orig"], test["diff"]))
 
 def test_equivalent():
     assert not equivalent(1, "1")
