@@ -10,14 +10,5 @@ Documentation of dictionary_diff
    :maxdepth: 2
    :caption: Contents:
 
-.. automodule:: dictionary_diff
-   :members:
-
 .. automodule:: dictionary_diff.diff
-   :members:
-
-.. automodule:: dictionary_diff.dict_diff
-   :members:
-
-.. automodule:: dictionary_diff.list_diff
    :members:
