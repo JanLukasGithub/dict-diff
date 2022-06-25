@@ -1,14 +1,13 @@
 """
 **list_diff module exports:**
- * :func:`~dictionary_diff.list_diff.equivalent` checks if two lists are equivalent
- * :func:`~dictionary_diff.list_diff.diff` returns the diff between two lists
- * :func:`~dictionary_diff.list_diff.apply_diff` applies the diff to a list
+ * :func:`~dictionary_diff.list_diff.list_equivalent` checks if two lists are equivalent
+ * :func:`~dictionary_diff.list_diff.list_diff` returns the diff between two lists
+ * :func:`~dictionary_diff.list_diff.apply_list_diff` applies the diff to a list
 
 """
 
 from dictionary_diff import diff
 from dictionary_diff.diff import _Remove
-
 
 def list_equivalent(list1: list, list2: list) -> bool:
     """

@@ -1,8 +1,8 @@
 """
 **dict_diff module exports:**
- * :func:`~dictionary_diff.dict_diff.apply_diff` Apply the diff to a dict
+ * :func:`~dictionary_diff.dict_diff.apply_dict_diff` Apply the diff to a dict
  * :func:`~dictionary_diff.dict_diff.dict_diff` Get the diff between two dicts
- * :func:`~dictionary_diff.dict_diff.equivalent` Checks if two items are equivalent
+ * :func:`~dictionary_diff.dict_diff.dict_equivalent` Checks if two items are equivalent
 
 """
 
