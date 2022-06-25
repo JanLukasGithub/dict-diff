@@ -51,3 +51,13 @@ def diff(orig, other, equivalent_func=equivalent):
         return list_diff.list_diff(orig, other, equivalent_func=equivalent_func)
     
     return other
+
+def apply_diff(orig, diff):
+    if isinstance(orig, dict) and isinstance(diff, dict):
+        import dictionary_diff.dict_diff as dict_diff
+        return dict_diff.apply_dict_diff(orig, diff)
+    elif isinstance(orig, list) and isinstance(diff, list):
+        import dictionary_diff.list_diff as list_diff
+        return list_diff.apply_diff(orig, diff)
+
+    return diff
