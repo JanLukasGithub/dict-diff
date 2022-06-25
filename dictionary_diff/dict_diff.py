@@ -99,14 +99,14 @@ def add_different(orig: dict, other: dict, equivalent_func=equivalent) -> dict:
     """
     new_dict = {}
 
-    for key in find_different(orig, other, equivalent_func):
-        if key in orig and isinstance(orig[key], dict) and isinstance(other[key], dict):
-            new_dict[key] = add_different(orig[key], other[key], equivalent_func)
+    for difference in find_different(orig, other, equivalent_func):
+        if difference in orig and isinstance(orig[difference], dict) and isinstance(other[difference], dict):
+            new_dict[difference] = add_different(orig[difference], other[difference], equivalent_func)
         else:
-            new_dict[key] = other[key]
+            new_dict[difference] = other[difference]
 
-    for key in find_removed(orig, other):
-        new_dict[key] = _Remove(orig[key])
+    for removed in find_removed(orig, other):
+        new_dict[removed] = _Remove(orig[removed])
 
     return new_dict
 
@@ -120,20 +120,18 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=equivalent) -> di
     This is faster than :func:`~dict_diff.dict_diff.add_different`,
      if the difference between the dicts is large
     """
-    to_remove = find_equivalent(orig, other, equivalent_func)
-
     removed_from = other.copy()
 
-    for key in to_remove:
-        removed_from.pop(key)
+    for to_remove in find_equivalent(orig, other, equivalent_func):
+        removed_from.pop(to_remove)
 
-    for key in removed_from:
-        if key in orig:
-            if isinstance(other[key], dict) and isinstance(orig[key], dict):
-                removed_from[key] = remove_equivalent(orig[key], other[key], equivalent_func)
+    for remaining in removed_from:
+        if remaining in orig:
+            if isinstance(other[remaining], dict) and isinstance(orig[remaining], dict):
+                removed_from[remaining] = remove_equivalent(orig[remaining], other[remaining], equivalent_func)
 
-    for key in find_removed(orig, other):
-        removed_from[key] = _Remove(orig[key])
+    for mark_remove in find_removed(orig, other):
+        removed_from[mark_remove] = _Remove(orig[mark_remove])
 
     return removed_from
 
@@ -200,13 +198,13 @@ def apply_diff(orig: dict, diff: dict) -> dict:
     """
     applied = orig.copy()
 
-    for key in diff:
-        if key in orig and isinstance(orig[key], dict) and isinstance(diff[key], dict):
-            applied[key] = apply_diff(orig[key], diff[key])
-        elif isinstance(diff[key], _Remove):
-            applied.pop(key)
+    for difference in diff:
+        if difference in orig and isinstance(orig[difference], dict) and isinstance(diff[difference], dict):
+            applied[difference] = apply_diff(orig[difference], diff[difference])
+        elif isinstance(diff[difference], _Remove):
+            applied.pop(difference)
         else:
-            applied[key] = diff[key]
+            applied[difference] = diff[difference]
 
     return applied
 
