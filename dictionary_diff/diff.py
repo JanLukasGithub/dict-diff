@@ -22,7 +22,7 @@ def equivalent(element1, element2) -> bool:
     """
     if type(element1) is not type(element2):
         return False
-    
+
     if isinstance(element1, dict):
         return dict_diff.equivalent(element1, element2, equivalent_func=equivalent)
 
