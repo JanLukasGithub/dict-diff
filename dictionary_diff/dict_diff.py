@@ -59,10 +59,7 @@ def add_different(orig: dict, other: dict, equivalent_func=diff.equivalent) -> d
     new_dict = {}
 
     for key in find_different(orig, other, equivalent_func):
-        if key in orig and isinstance(orig[key], dict) and isinstance(other[key], dict):
-            new_dict[key] = add_different(orig[key], other[key], equivalent_func)
-        else:
-            new_dict[key] = other[key]
+        new_dict[key] = diff.diff(orig.get(key, None), other[key], equivalent_func)
 
     for key in find_removed(orig, other):
         new_dict[key] = _Remove(orig[key])
@@ -90,6 +87,8 @@ def remove_equivalent(orig: dict, other: dict, equivalent_func=diff.equivalent) 
         if key in orig:
             if isinstance(other[key], dict) and isinstance(orig[key], dict):
                 removed_from[key] = remove_equivalent(orig[key], other[key], equivalent_func)
+            elif isinstance(other[key], list) and isinstance(orig[key], list):
+                removed_from[key] = diff.diff(orig[key], other[key], equivalent_func)
 
     for key in find_removed(orig, other):
         removed_from[key] = _Remove(orig[key])
