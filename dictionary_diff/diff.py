@@ -58,6 +58,6 @@ def apply_diff(orig, diff):
         return dict_diff.apply_dict_diff(orig, diff)
     elif isinstance(orig, list) and isinstance(diff, list):
         import dictionary_diff.list_diff as list_diff
-        return list_diff.apply_diff(orig, diff)
+        return list_diff.apply_list_diff(orig, diff)
 
     return diff

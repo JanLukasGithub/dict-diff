@@ -105,7 +105,7 @@ def find_removed(orig: list, other: list, equivalent_func=diff.equivalent) -> li
 
     return orig_copy
 
-def apply_diff(orig: list, other: list) -> list:
+def apply_list_diff(orig: list, other: list) -> list:
     """
     Applies the diff to orig
 
