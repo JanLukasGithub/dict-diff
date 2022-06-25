@@ -16,7 +16,7 @@ class _Remove:
             return False
 
         return self.value == __o.value
-        
+
 def equivalent(element1, element2) -> bool:
     """
     :return: True if and only if:
@@ -32,32 +32,33 @@ def equivalent(element1, element2) -> bool:
         return False
 
     if isinstance(element1, list):
-        import dictionary_diff.list_diff as list_diff
+        from dictionary_diff import list_diff
         return list_diff.list_equivalent(element1, element2)
 
     if isinstance(element1, dict):
-        import dictionary_diff.dict_diff as dict_diff
+        from dictionary_diff import dict_diff
         return dict_diff.dict_equivalent(element1, element2)
 
     return element1 == element2
 
 def diff(orig, other, equivalent_func=equivalent):
     if isinstance(orig, dict) and isinstance(other, dict):
-        import dictionary_diff.dict_diff as dict_diff
+        from dictionary_diff import dict_diff
         return dict_diff.dict_diff(orig, other, equivalent_func=equivalent_func)
 
     if isinstance(orig, list) and isinstance(other, list):
-        import dictionary_diff.list_diff as list_diff
+        from dictionary_diff import list_diff
         return list_diff.list_diff(orig, other, equivalent_func=equivalent_func)
-    
+
     return other
 
 def apply_diff(orig, diff):
     if isinstance(orig, dict) and isinstance(diff, dict):
-        import dictionary_diff.dict_diff as dict_diff
+        from dictionary_diff import dict_diff
         return dict_diff.apply_dict_diff(orig, diff)
-    elif isinstance(orig, list) and isinstance(diff, list):
-        import dictionary_diff.list_diff as list_diff
+
+    if isinstance(orig, list) and isinstance(diff, list):
+        from dictionary_diff import list_diff
         return list_diff.apply_list_diff(orig, diff)
 
     return diff

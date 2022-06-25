@@ -2,8 +2,7 @@
 
 """
 
-import dictionary_diff.diff as diff
-import dictionary_diff.dict_diff as dict_diff
+from dictionary_diff import diff
 from dictionary_diff.diff import _Remove
 
 
@@ -79,7 +78,8 @@ def find_added(orig: list, other: list, equivalent_func=diff.equivalent) -> list
 
 def find_removed(orig: list, other: list, equivalent_func=diff.equivalent) -> list:
     """
-    :return: a list of values v that are in orig but not other, such that v is a subset of orig's values
+    :return: a list of values v that are in orig but not other, such that v is a subset of orig's
+    values
     :rtype: list
     """
     orig_copy = orig.copy()
