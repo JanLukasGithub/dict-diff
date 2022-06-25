@@ -6,20 +6,8 @@
 
 """
 
-from dataclasses import dataclass
-
-@dataclass
-class _Remove:
-    value: object
-
-    def __init__(self, value=None) -> None:
-        self.value = value
-
-    def __eq__(self, __o: object) -> bool:
-        if not isinstance(__o, self.__class__):
-            return False
-
-        return self.value == __o.value
+from dictionary_diff import list_diff
+from dictionary_diff import dict_diff
 
 def equivalent(element1, element2) -> bool:
     """
@@ -36,11 +24,9 @@ def equivalent(element1, element2) -> bool:
         return False
 
     if isinstance(element1, list):
-        from dictionary_diff import list_diff
         return list_diff.list_equivalent(element1, element2, equivalent_func=equivalent)
 
     if isinstance(element1, dict):
-        from dictionary_diff import dict_diff
         return dict_diff.dict_equivalent(element1, element2, equivalent_func=equivalent)
 
     return element1 == element2
@@ -56,11 +42,9 @@ def diff(orig, other, equivalent_func=equivalent):
      returns something :func:`~dictionary_diff.diff.equivalent` to other
     """
     if isinstance(orig, dict) and isinstance(other, dict):
-        from dictionary_diff import dict_diff
-        return dict_diff.dict_diff(orig, other, equivalent_func=equivalent_func)
+        return dict_diff.dict_diff(orig, other, equivalent_func=equivalent_func, diff_func=diff)
 
     if isinstance(orig, list) and isinstance(other, list):
-        from dictionary_diff import list_diff
         return list_diff.list_diff(orig, other, equivalent_func=equivalent_func)
 
     return other
@@ -77,11 +61,9 @@ def apply_diff(orig, difference):
      is :func:`~dictionary_diff.diff.equivalent` to other
     """
     if isinstance(orig, dict) and isinstance(difference, dict):
-        from dictionary_diff import dict_diff
-        return dict_diff.apply_dict_diff(orig, difference)
+        return dict_diff.apply_dict_diff(orig, difference, apply_diff)
 
     if isinstance(orig, list) and isinstance(difference, list):
-        from dictionary_diff import list_diff
         return list_diff.apply_list_diff(orig, difference)
 
     return difference
